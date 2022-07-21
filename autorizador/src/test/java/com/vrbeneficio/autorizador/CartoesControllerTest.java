@@ -23,12 +23,20 @@ public class CartoesControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    void deveCriarUmCartaoERetornar() throws Exception {
+    void deveCriarUmCartao() throws Exception {
         CartaoRequest cartao = new CartaoRequest("6549873025634501", "1234");
         mockMvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(cartao)))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    void deveCriarUmNovoCartaoERetornar() throws Exception {
+        CartaoRequest cartao = new CartaoRequest("172537d3713", "1643");
+        mockMvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(cartao)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.numeroCartao", is("6549873025634501")))
-                .andExpect(jsonPath("$.senha", is("1234")));
+                .andExpect(jsonPath("$.numeroCartao", is("172537d3713")))
+                .andExpect(jsonPath("$.senha", is("1643")));
     }
 }

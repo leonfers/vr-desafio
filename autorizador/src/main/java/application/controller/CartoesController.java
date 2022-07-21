@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.*;
 public class CartoesController {
 
     @PostMapping("/cartoes")
-    public @ResponseBody ResponseEntity<CartaoResponse> getCartao(CartaoRequest cartaoRequest) {
+    public ResponseEntity<CartaoResponse> getCartao(@RequestBody CartaoRequest cartaoRequest) {
+        System.out.println(cartaoRequest);
         CartaoResponse cartaoResponse = new CartaoResponse();
-        cartaoResponse.setNumeroCartao("6549873025634501");
-        cartaoResponse.setSenha("1234");
+        cartaoResponse.setNumeroCartao(cartaoRequest.getNumeroCartao());
+        cartaoResponse.setSenha(cartaoRequest.getSenha());
         return new ResponseEntity<>(cartaoResponse, HttpStatus.CREATED);
     }
 }
