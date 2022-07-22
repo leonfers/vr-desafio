@@ -1,6 +1,6 @@
-package com.vrbeneficio.autorizador.application.controller.domain.dto;
+package com.vrbeneficio.autorizador.domain.dto;
 
-import com.vrbeneficio.autorizador.application.controller.domain.entity.Cartao;
+import com.vrbeneficio.autorizador.domain.entity.Cartao;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -20,7 +20,7 @@ public class CartaoDTO implements Serializable {
     }
 
     public CartaoDTO(Cartao cartao) {
-        this.numeroCartao = getNumeroCartao();
-        this.senha = getSenha();
+        this.numeroCartao = cartao.getNumeroCartao();
+        this.senha = cartao.getSenha();
     }
 }
