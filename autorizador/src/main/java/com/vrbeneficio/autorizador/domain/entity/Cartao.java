@@ -2,9 +2,7 @@ package com.vrbeneficio.autorizador.domain.entity;
 
 import com.sun.xml.bind.v2.TODO;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -16,8 +14,9 @@ public class Cartao {
     @Column(name = "senha", nullable = false)
     private String senha; //TODO Persistir a senha criptografada
 
-    @Column(name = "saldo", nullable = false)
-    private BigDecimal saldo;
+    @OneToOne(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+    private Saldo saldo;
 
     public String getNumeroCartao() {
         return numeroCartao;
@@ -35,11 +34,11 @@ public class Cartao {
         this.senha = senha;
     }
 
-    public BigDecimal getSaldo() {
+    public Saldo getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(BigDecimal saldo) {
+    public void setSaldo(Saldo saldo) {
         this.saldo = saldo;
     }
 }
