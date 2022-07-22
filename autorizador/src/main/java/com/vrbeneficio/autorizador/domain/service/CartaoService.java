@@ -1,6 +1,6 @@
-package com.vrbeneficio.autorizador.application.controller.domain.service;
+package com.vrbeneficio.autorizador.domain.service;
 
-import com.vrbeneficio.autorizador.application.controller.domain.dto.CartaoDTO;
+import com.vrbeneficio.autorizador.domain.dto.CartaoDTO;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

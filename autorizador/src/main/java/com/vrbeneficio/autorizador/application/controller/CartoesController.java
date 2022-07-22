@@ -1,7 +1,7 @@
 package com.vrbeneficio.autorizador.application.controller;
 
-import com.vrbeneficio.autorizador.application.controller.domain.dto.CartaoDTO;
-import com.vrbeneficio.autorizador.application.controller.domain.service.CartaoService;
+import com.vrbeneficio.autorizador.domain.dto.CartaoDTO;
+import com.vrbeneficio.autorizador.domain.service.CartaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ public class CartoesController {
 
     @PostMapping("/cartoes")
     public ResponseEntity<CartaoDTO> getCartao(@RequestBody CartaoDTO cartaoDTO) {
-        CartaoDTO cartao= cartaoService.criarCartao(cartaoDTO);
+        CartaoDTO cartao = cartaoService.criarCartao(cartaoDTO);
         return new ResponseEntity<>(cartao, HttpStatus.CREATED);
     }
 
