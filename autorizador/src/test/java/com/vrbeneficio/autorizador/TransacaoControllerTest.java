@@ -62,38 +62,35 @@ public class TransacaoControllerTest {
                 .andExpect(content().string("CARTAO_INEXISTENTE"))
                 .andExpect(status().isUnprocessableEntity());
     }
-//
-//    @Test
-//    void deveTentarCriarUmNovoCartaoEDeveConstarQueJaExiste() throws Exception {
-//        CartaoDTO cartao = new CartaoDTO("17253737133", "16435");
-//        mockMvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(cartao)));
-//        mockMvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(cartao)))
-//                .andExpect(status().isUnprocessableEntity())
-//                .andExpect(jsonPath("$.numeroCartao", is("17253737133")))
-//                .andExpect(jsonPath("$.senha", is("16435")));
-//    }
-//
-//    @Test
-//    void deveTentarCriarUmNovoCartaoEDeveConsultarSeuSaldo() throws Exception {
-//        CartaoDTO cartao = new CartaoDTO("17253737133", "16435");
-//        mockMvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(cartao)));
-//
-//        mockMvc.perform(get("/cartoes/"+cartao.getNumeroCartao()).contentType(MediaType.TEXT_PLAIN))
-//                .andExpect(status().isOk())
-//                .andExpect(content().string("500.00"));
-//    }
-//
-//    @Test
-//    void deveTentarConsultarSaldoEReceber404CartaoNaoEncontrado() throws Exception {
-//        CartaoDTO cartao = new CartaoDTO("17253737133", "16435");
-//        mockMvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(cartao)));
-//
-//        mockMvc.perform(get("/cartoes/2213213213213").contentType(MediaType.TEXT_PLAIN))
-//                .andExpect(status().isNotFound());
-//    }
+    @Test
+    void deveFalharAoCriarUmaTransacaoComSaldoInsuficiente() throws Exception {
+        TransacaoDTO transacaoDTO = new TransacaoDTO("6549873025634501", "1234", new BigDecimal("501.00"));
+        mockMvc.perform(post("/transacoes").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(transacaoDTO)))
+                .andExpect(content().string("SALDO_INSUFICIENTE"))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    void deveFalharAoCriarUmaTransacaoComSenhaInvalida() throws Exception {
+        TransacaoDTO transacaoDTO = new TransacaoDTO("6549873025634501", "1231", new BigDecimal("500.00"));
+        mockMvc.perform(post("/transacoes").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(transacaoDTO)))
+                .andExpect(content().string("SENHA_INVALIDA"))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+
+    @Test
+    void deveCriarUmaTransacaoEretornarSaldode450() throws Exception {
+        TransacaoDTO transacaoDTO = new TransacaoDTO("6549873025634501", "1234", new BigDecimal("50.00"));
+        mockMvc.perform(post("/transacoes").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(transacaoDTO)))
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(get("/cartoes/"+transacaoDTO.getNumeroCartao()).contentType(MediaType.TEXT_PLAIN))
+                .andExpect(status().isOk())
+                .andExpect(content().string("450.00"));
+    }
 }
 
