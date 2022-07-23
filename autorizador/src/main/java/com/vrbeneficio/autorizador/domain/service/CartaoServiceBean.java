@@ -6,7 +6,6 @@ import com.vrbeneficio.autorizador.domain.entity.Saldo;
 import com.vrbeneficio.autorizador.domain.exception.CartaoJaExisteException;
 import com.vrbeneficio.autorizador.domain.exception.CartaoNaoEncontradoException;
 import com.vrbeneficio.autorizador.domain.repository.CartaoRepository;
-import com.vrbeneficio.autorizador.domain.repository.SaldoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +18,6 @@ public class CartaoServiceBean implements CartaoService {
 
     @Autowired
     private CartaoRepository cartaoRepository;
-
-    @Autowired
-    private SaldoRepository saldoRepository;
 
     @Override
     @Transactional

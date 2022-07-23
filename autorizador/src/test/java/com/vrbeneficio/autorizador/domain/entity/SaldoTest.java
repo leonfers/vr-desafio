@@ -32,4 +32,16 @@ class SaldoTest {
         assertEquals(new BigDecimal(250), saldo.getValor());
     }
 
+    @Test
+    void saldoDevePossuirOValor(){
+        Saldo saldo = new Saldo();
+        assertTrue(saldo.possuiValor(new BigDecimal(500)));
+    }
+
+    @Test
+    void saldoNaoDevePossuirOValor(){
+        Saldo saldo = new Saldo();
+        assertFalse(saldo.possuiValor(new BigDecimal(501)));
+    }
+
 }
