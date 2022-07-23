@@ -2,11 +2,15 @@ package com.vrbeneficio.autorizador.domain.service;
 
 import com.vrbeneficio.autorizador.domain.dto.CartaoDTO;
 import com.vrbeneficio.autorizador.domain.entity.Cartao;
+import com.vrbeneficio.autorizador.domain.entity.Saldo;
 import com.vrbeneficio.autorizador.domain.exception.CartaoJaExisteException;
+import com.vrbeneficio.autorizador.domain.exception.CartaoNaoEncontradoException;
 import com.vrbeneficio.autorizador.domain.repository.CartaoRepository;
+import com.vrbeneficio.autorizador.domain.repository.SaldoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Optional;
 
@@ -16,13 +20,18 @@ public class CartaoServiceBean implements CartaoService {
     @Autowired
     private CartaoRepository cartaoRepository;
 
+    @Autowired
+    private SaldoRepository saldoRepository;
+
     @Override
+    @Transactional
     public CartaoDTO criarCartao(CartaoDTO cartaoDTO) {
         this.validarCartao(cartaoDTO);
         Cartao cartao= new Cartao();
         cartao.setNumeroCartao(cartaoDTO.getNumeroCartao());
         cartao.setSenha(cartaoDTO.getSenha());
-        cartao.setSaldo(new BigDecimal(500));
+        Saldo saldo = new Saldo();
+        cartao.setSaldo(saldo);
         cartaoRepository.save(cartao);
         return new CartaoDTO(cartao);
     }
@@ -35,7 +44,8 @@ public class CartaoServiceBean implements CartaoService {
     }
 
     @Override
-    public BigDecimal consultarSaldo() {
-        return null;
+    public BigDecimal consultarSaldo(String numeroCartao) {
+        Optional<Cartao> cartao = cartaoRepository.findById(numeroCartao);
+        return cartao.orElseThrow(CartaoNaoEncontradoException::new).getSaldo().getValor();
     }
 }

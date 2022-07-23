@@ -10,5 +10,5 @@ public interface CartaoService {
 
     CartaoDTO criarCartao(CartaoDTO cartaoDTO);
 
-    BigDecimal consultarSaldo();
+    BigDecimal consultarSaldo(String numeroCartao);
 }

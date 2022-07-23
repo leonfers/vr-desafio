@@ -1,11 +1,14 @@
 package com.vrbeneficio.autorizador.application.controller;
 
+import com.sun.istack.NotNull;
 import com.vrbeneficio.autorizador.domain.dto.CartaoDTO;
 import com.vrbeneficio.autorizador.domain.service.CartaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/")
@@ -17,6 +20,12 @@ public class CartoesController {
     public ResponseEntity<CartaoDTO> getCartao(@RequestBody CartaoDTO cartaoDTO) {
         CartaoDTO cartao = cartaoService.criarCartao(cartaoDTO);
         return new ResponseEntity<>(cartao, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/cartoes/{numeroCartao}")
+    public ResponseEntity<BigDecimal> getCartao(@PathVariable @NotNull String numeroCartao) {
+        BigDecimal saldo = cartaoService.consultarSaldo(numeroCartao);
+        return new ResponseEntity<>(saldo, HttpStatus.OK);
     }
 
     public CartaoService getCartaoService() {

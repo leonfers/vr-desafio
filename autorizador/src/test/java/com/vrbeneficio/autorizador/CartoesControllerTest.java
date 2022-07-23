@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -55,4 +56,26 @@ public class CartoesControllerTest {
                 .andExpect(jsonPath("$.numeroCartao", is("17253737133")))
                 .andExpect(jsonPath("$.senha", is("16435")));
     }
+
+    @Test
+    void deveTentarCriarUmNovoCartaoEDeveConsultarSeuSaldo() throws Exception {
+        CartaoDTO cartao = new CartaoDTO("17253737133", "16435");
+        mockMvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(cartao)));
+
+        mockMvc.perform(get("/cartoes/"+cartao.getNumeroCartao()).contentType(MediaType.TEXT_PLAIN))
+                .andExpect(status().isOk())
+                .andExpect(content().string("500.00"));
+    }
+
+    @Test
+    void deveTentarConsultarSaldoEReceber404CartaoNaoEncontrado() throws Exception {
+        CartaoDTO cartao = new CartaoDTO("17253737133", "16435");
+        mockMvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(cartao)));
+
+        mockMvc.perform(get("/cartoes/2213213213213").contentType(MediaType.TEXT_PLAIN))
+                .andExpect(status().isNotFound());
+    }
 }
+
