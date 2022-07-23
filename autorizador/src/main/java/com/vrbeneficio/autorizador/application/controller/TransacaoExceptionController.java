@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class TransacaoExceptionController {
 
     @ExceptionHandler(value = TransacaoInvalidaCartaoNaoExisteException.class)
-    public ResponseEntity<Object> exception(CartaoJaExisteException exception) {
+    public ResponseEntity<Object> exception(TransacaoInvalidaCartaoNaoExisteException exception) {
         return new ResponseEntity<>("CARTAO_INEXISTENTE", HttpStatus.UNPROCESSABLE_ENTITY);
     }
 

@@ -54,15 +54,14 @@ public class TransacaoControllerTest {
                 .andExpect(status().isCreated());
     }
 
-//    @Test
-//    void deveCriarUmNovoCartaoERetornar() throws Exception {
-//        CartaoDTO cartao = new CartaoDTO("172537d3713", "1643");
-//        mockMvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(cartao)))
-//                .andExpect(status().isCreated())
-//                .andExpect(jsonPath("$.numeroCartao", is("172537d3713")))
-//                .andExpect(jsonPath("$.senha", is("1643")));
-//    }
+    @Test
+    void deveFalharAoCriarUmaTransacaoComCartaoInexistente() throws Exception {
+        TransacaoDTO transacaoDTO = new TransacaoDTO("654987302563501", "1234", new BigDecimal("10.00"));
+        mockMvc.perform(post("/transacoes").contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(transacaoDTO)))
+                .andExpect(content().string("CARTAO_INEXISTENTE"))
+                .andExpect(status().isUnprocessableEntity());
+    }
 //
 //    @Test
 //    void deveTentarCriarUmNovoCartaoEDeveConstarQueJaExiste() throws Exception {
