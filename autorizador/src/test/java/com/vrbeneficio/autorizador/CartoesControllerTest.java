@@ -67,4 +67,15 @@ public class CartoesControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("500.00"));
     }
+
+    @Test
+    void deveTentarConsultarSaldoEReceber404CartaoNaoEncontrado() throws Exception {
+        CartaoDTO cartao = new CartaoDTO("17253737133", "16435");
+        mockMvc.perform(post("/cartoes").contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(cartao)));
+
+        mockMvc.perform(get("/cartoes/2213213213213").contentType(MediaType.TEXT_PLAIN))
+                .andExpect(status().isNotFound());
+    }
 }
+
