@@ -15,7 +15,7 @@ public class Cartao {
     private String senha; //TODO Persistir a senha criptografada
 
     @OneToOne(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, optional = false)
+            fetch = FetchType.EAGER, optional = false)
     private Saldo saldo;
 
     public String getNumeroCartao() {

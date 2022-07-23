@@ -67,4 +67,8 @@ public class Saldo {
         this.valor = this.valor.subtract(valor);
         return this.valor;
     }
+
+    public boolean possuiValor(BigDecimal valor){
+        return this.valor.compareTo(valor) >= 0;
+    }
 }
