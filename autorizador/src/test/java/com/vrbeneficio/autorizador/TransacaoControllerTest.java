@@ -1,11 +1,10 @@
 package com.vrbeneficio.autorizador;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vrbeneficio.autorizador.domain.dto.CartaoDTO;
-import com.vrbeneficio.autorizador.domain.dto.TransacaoDTO;
-import com.vrbeneficio.autorizador.domain.entity.Cartao;
-import com.vrbeneficio.autorizador.domain.entity.Saldo;
-import com.vrbeneficio.autorizador.domain.repository.CartaoRepository;
+import com.vrbeneficio.autorizador.aplicacao.dominio.dto.TransacaoDTO;
+import com.vrbeneficio.autorizador.aplicacao.persistencia.entidade.Cartao;
+import com.vrbeneficio.autorizador.aplicacao.persistencia.entidade.Saldo;
+import com.vrbeneficio.autorizador.aplicacao.persistencia.repositorio.CartaoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
