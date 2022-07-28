@@ -20,17 +20,23 @@ Clonar projeto em uma pasta
 > git clone https://github.com/leonfers/vr-desafio.git
 
 Iniciar o banco de dados com docker-compose  (A partir da raiz do projeto)
+
 > cd docker
+
 > docker compose up
 
 Iniciar o projeto (A partir da raiz do projeto)
+
 > cd autorizador
+
 > ./mvnw  spring-boot:run
 
 ### Testes
 Ao todo foram criados 15 testes na aplicação.
 Para rodar usar o comando  (A partir da raiz do projeto)
+
 > cd autorizador
+
 > ./mvnw  test
 
 
@@ -38,7 +44,9 @@ Para rodar usar o comando  (A partir da raiz do projeto)
 O autorizador utliza uma interface rest para comunicação com os seguintes endpoints
 
 > /cartoes [POST]  --- Criar novo cartão
+
 > /cartoes/2213213213213 [GET] --- Obter saldo do Cartão
+
 > /transacoes [POST] --- Realizar uma Transação
 
 a especificacao básica pode ser encontrada nesse caminho 
@@ -128,13 +136,17 @@ Foram criadas pull requests para cada momento relevantes de atualização.
 Não foi implementado uma solução para transações concorrentes, para esse cenário possíveis soluções seriam:
 
 Criar um lock na linha de saldo na base de dados:
+
    Pros: Mais simples de implementar
+   
          Impede que o bando de dados fique inconsistente
 
    Cons: Pode criar deadlocks no banco de dados
+   
          Impede que o bando de dados seja distribuído, limitando a escala.
 
 Usar o [Saga design pattern](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/saga/saga), onde é criado uma estrutura de eventos que caso uma incosistencia seja detectada, serão realizadas novas transações afim de realizar a correção e atingir uma consistência eventual, como no caso de transações de cartão de crédito poderiam ser estornos:
+
    Pros: Não trava transações
 
    Cons: Complexo de implementar
