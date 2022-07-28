@@ -21,7 +21,7 @@ public class TransacoesController {
 
     @PostMapping("/transacoes")
     public ResponseEntity<String> criarTransacao(@RequestBody TransacaoDTO transacaoDTO) {
-        transacaoService.subtrairSaldo(transacaoDTO.getValor(), transacaoDTO.getNumeroCartao(), transacaoDTO.getSenhaCartao());
+        transacaoService.subtrairSaldo(transacaoDTO);
         return new ResponseEntity<>("OK",HttpStatus.CREATED);
     }
 
